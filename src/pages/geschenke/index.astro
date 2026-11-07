@@ -1,8 +1,88 @@
 ---
 import Base from '../../layouts/Base.astro';
+import FormEnd from '../../components/FormEnd.astro';
 import { geschenke } from '../../data/hochzeit';
+import { TRAUZEUGEN_API_URL } from '../../data/config';
 ---
 <Base title="Geschenke">
   <h1>Geschenke</h1>
   <p class="todo">{geschenke.text}</p>
+
+  <h2>Unsere Wunschliste</h2>
+  <p>Hier kannst Du ein Geschenk für Dich reservieren, damit nichts doppelt kommt. Die anderen Gäste sehen, was schon vergeben ist.</p>
+  <div class="kachel" id="spoiler">
+    <p><strong>Lieber Felix, liebe Lou:</strong> ab hier bitte nicht weiter. Was reserviert ist, wollt Ihr ja nicht wissen.</p>
+    <button type="button" id="open-list">Ich bin Gast: Liste öffnen</button>
+  </div>
+
+  <div id="gift-list" hidden>
+    {!TRAUZEUGEN_API_URL && <p class="todo">Beispieldaten zur Ansicht, solange die Reservierung nicht aktiv ist.</p>}
+    <ul class="gifts">
+      {geschenke.wuensche.map((g) => (
+        <li class="gift" data-id={g.id} data-anzahl={g.anzahl}>
+          <h3>{g.link ? <a href={g.link} target="_blank" rel="noopener">{g.was}</a> : g.was}</h3>
+          {g.beschreibung && <p>{g.beschreibung}</p>}
+          {g.preis && <p><small>{g.preis}</small></p>}
+          <p class="gift-status">{g.anzahl === 0 ? 'Gern auch mehrfach, kein Abhaken nötig.' : ''}</p>
+          {g.anzahl > 0 && <button type="button" class="secondary reserve" data-id={g.id} data-was={g.was}>Das schenke ich</button>}
+        </li>
+      ))}
+    </ul>
+
+    <form id="gift-form" data-action="geschenk" hidden>
+      <h3>Reservieren: <span id="gift-name"></span></h3>
+      <input type="hidden" name="geschenk_id" />
+      <input type="hidden" name="was" />
+      <input type="hidden" name="max" />
+      <label for="g-name">Dein Name (sehen nur unsere Trauzeugen, nicht wir und nicht die anderen Gäste)</label>
+      <input id="g-name" type="text" name="name" maxlength="80" required />
+      <FormEnd label="Verbindlich reservieren" />
+      <p><small>Versehentlich reserviert? Sag unseren Trauzeugen Bescheid.</small></p>
+    </form>
+  </div>
+
+  <script>
+    import { TRAUZEUGEN_API_URL as URL_ } from '../../data/config';
+    import { setupForm } from '../../scripts/forms';
+    const $ = (id: string) => document.getElementById(id)!;
+    const DEMO: Record<string, number> = { pfanne: 1, glaeser: 2 };
+    const form = $('gift-form') as HTMLFormElement;
+
+    async function load() {
+      let reserviert: Record<string, number> = DEMO;
+      if (URL_) {
+        try {
+          const r = await fetch(`${URL_}${URL_.includes('?') ? '&' : '?'}action=geschenke`);
+          reserviert = (await r.json()).reserviert || {};
+        } catch { reserviert = {}; }
+      }
+      document.querySelectorAll<HTMLElement>('.gift').forEach((li) => {
+        const max = Number(li.dataset.anzahl);
+        if (!max) return;
+        const offen = Math.max(0, max - (reserviert[li.dataset.id!] || 0));
+        li.querySelector('.gift-status')!.textContent = offen === 0 ? 'Schon vergeben' : max > 1 ? `Noch ${offen} von ${max} frei` : 'Noch frei';
+        li.classList.toggle('taken', offen === 0);
+        const b = li.querySelector<HTMLButtonElement>('.reserve');
+        if (b) b.hidden = offen === 0;
+      });
+    }
+
+    $('open-list').addEventListener('click', () => {
+      $('spoiler').hidden = true;
+      $('gift-list').hidden = false;
+      load();
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.reserve').forEach((b) => b.addEventListener('click', () => {
+      const li = b.closest<HTMLElement>('.gift')!;
+      (form.elements.namedItem('geschenk_id') as HTMLInputElement).value = b.dataset.id!;
+      (form.elements.namedItem('was') as HTMLInputElement).value = b.dataset.was!;
+      (form.elements.namedItem('max') as HTMLInputElement).value = li.dataset.anzahl!;
+      $('gift-name').textContent = b.dataset.was!;
+      form.hidden = false;
+      form.scrollIntoView({ behavior: 'smooth' });
+    }));
+
+    setupForm(form, load, URL_);
+  </script>
 </Base>

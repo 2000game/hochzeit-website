@@ -64,6 +64,17 @@ export const fotos = {
 
 export const geschenke = {
   text: 'TODO: Text zum Thema Geschenke, z. B. Wunsch nach einem Beitrag zur Hochzeitsreise. Keine Kontodaten auf der Website.',
+  // Digitale Wunschliste. id nie ändern, sobald jemand reserviert hat (Reservierungen hängen an der id).
+  // anzahl: wie oft das Geschenk vergeben werden kann; 0 = unbegrenzt (z. B. Zuschuss), dann ohne Abhaken.
+  // TODO: Platzhalter durch echte Wünsche ersetzen.
+  wuensche: [
+    { id: 'reise', was: 'Zuschuss zur Hochzeitsreise', beschreibung: 'Jeder Beitrag hilft.', link: '', preis: '', anzahl: 0 },
+    { id: 'kaffeemuehle', was: 'Handkaffeemühle', beschreibung: 'Platzhalter', link: 'https://example.com', preis: 'ca. 60 €', anzahl: 1 },
+    { id: 'pfanne', was: 'Gusseisenpfanne 28 cm', beschreibung: 'Platzhalter', link: '', preis: 'ca. 50 €', anzahl: 1 },
+    { id: 'glaeser', was: 'Weingläser (2er-Set)', beschreibung: 'Platzhalter', link: '', preis: 'ca. 25 €', anzahl: 3 },
+    { id: 'pflanze', was: 'Große Zimmerpflanze', beschreibung: 'Platzhalter', link: '', preis: 'ca. 40 €', anzahl: 1 },
+    { id: 'spiel', was: 'Brettspiel für zwei', beschreibung: 'Platzhalter', link: '', preis: 'ca. 30 €', anzahl: 1 },
+  ],
 };
 
 export const impressum = {

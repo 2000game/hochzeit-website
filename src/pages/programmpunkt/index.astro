@@ -2,12 +2,12 @@
 import Base from '../../layouts/Base.astro';
 import FormEnd from '../../components/FormEnd.astro';
 import Kontakt from '../../components/Kontakt.astro';
-import { PROGRAMM_API_URL } from '../../data/config';
+import { TRAUZEUGEN_API_URL } from '../../data/config';
 ---
 <Base title="Programmpunkt">
   <h1>Programmpunkt anmelden</h1>
   <p>Du möchtest bei der Feier eine Rede halten, ein Spiel machen, etwas singen oder eine Diashow zeigen? Wie schön! Damit alles in den Ablauf passt, stimmen unsere Trauzeugen die Beiträge ab. Wir als Brautpaar sehen Deine Anmeldung nicht, die Überraschung bleibt also eine.</p>
-  {!PROGRAMM_API_URL && <p class="inactive-note">Dieses Formular ist noch nicht aktiv. Melde Dich bis dahin direkt bei unseren Trauzeugen.</p>}
+  {!TRAUZEUGEN_API_URL && <p class="inactive-note">Dieses Formular ist noch nicht aktiv. Melde Dich bis dahin direkt bei unseren Trauzeugen.</p>}
   <form id="pp-form" data-action="programmpunkt">
     <label for="pp-name">Dein Name</label>
     <input id="pp-name" type="text" name="name" maxlength="80" required />
@@ -27,8 +27,8 @@ import { PROGRAMM_API_URL } from '../../data/config';
   </form>
   <Kontakt />
   <script>
-    import { PROGRAMM_API_URL } from '../../data/config';
+    import { TRAUZEUGEN_API_URL } from '../../data/config';
     import { setupForm } from '../../scripts/forms';
-    setupForm(document.getElementById('pp-form') as HTMLFormElement, undefined, PROGRAMM_API_URL);
+    setupForm(document.getElementById('pp-form') as HTMLFormElement, undefined, TRAUZEUGEN_API_URL);
   </script>
 </Base>

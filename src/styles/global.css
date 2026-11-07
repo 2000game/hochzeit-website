@@ -56,3 +56,9 @@ table.wishes th, table.wishes td { text-align: left; padding: var(--space-2); bo
 .kachel { background: var(--color-surface, #f6f4ef); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); margin: var(--space-4, 2rem) 0; }
 .kachel h2 { margin-top: 0; }
 .kachel ul { padding-left: 1.2em; }
+.gifts { list-style: none; padding: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.gift { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); }
+.gift h3 { margin-top: 0; }
+.gift.taken { opacity: .55; }
+.gift-status { font-weight: 600; }
+[hidden] { display: none !important; }

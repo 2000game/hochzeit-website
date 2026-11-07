@@ -16,11 +16,12 @@ Hinweise:
 - Das Sheet selbst bleibt privat. Nicht freigeben.
 - Eingaben werden geprüft (Pflichtfelder, Längen, max. 10 Personen, Honeypot) und gegen Formel-Einschleusung entschärft.
 
-## Programmpunkte (für die Trauzeugen)
+## Programmpunkte und Geschenke (für die Trauzeugen)
 
-Die Anmeldungen für Programmpunkte sollen beim Brautpaar nicht ankommen. Deshalb richten die Trauzeugen
+Programmpunkte und Geschenk-Reservierungen soll das Brautpaar nicht sehen. Deshalb richten die Trauzeugen
 dasselbe Skript in **ihrem eigenen** Google-Konto ein:
 
 1. Neues Google Sheet anlegen, Code.gs wie oben einfügen, `setup` ausführen, als Web-App bereitstellen.
-2. Die Web-App-URL in GitHub als Repository-Variable `PUBLIC_PROGRAMM_API_URL` eintragen (oder in `src/data/config.ts`).
-3. Die Anmeldungen landen im Tab `Programmpunkte` ihres Sheets.
+2. Die Web-App-URL in GitHub als Repository-Variable `PUBLIC_TRAUZEUGEN_API_URL` eintragen (oder in `src/data/config.ts`).
+3. Anmeldungen landen im Tab `Programmpunkte`, Reservierungen im Tab `Geschenke_Reserviert` ihres Sheets.
+   Die Website liest per GET nur die Anzahl je Geschenk, nie Namen. Versehentliche Reservierung: Zeile löschen.

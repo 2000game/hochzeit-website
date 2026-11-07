@@ -8,7 +8,8 @@ var TABS = {
   Zusagen_Feier: ['id', 'zeitpunkt', 'person', 'kommt', 'essen', 'allergien', 'kind', 'alter', 'nachricht'],
   BringShare_Wuensche: ['id', 'was', 'anzahl_gesucht', 'hinweis'],
   BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz'],
-  Programmpunkte: ['zeitpunkt', 'name', 'kontakt', 'art', 'beschreibung', 'dauer_min', 'technik']
+  Programmpunkte: ['zeitpunkt', 'name', 'kontakt', 'art', 'beschreibung', 'dauer_min', 'technik'],
+  Geschenke_Reserviert: ['zeitpunkt', 'geschenk_id', 'was', 'name']
 };
 var MAX_NAME = 80;
 var MAX_TEXT = 1000;
@@ -30,8 +31,9 @@ function json_(obj) {
 
 function doGet(e) {
   var action = e && e.parameter ? e.parameter.action : '';
-  if (action !== 'bringshare') return json_({ ok: false, error: 'Unbekannte Aktion' });
-  return json_(bringshareData_());
+  if (action === 'bringshare') return json_(bringshareData_());
+  if (action === 'geschenke') return json_({ reserviert: geschenkeCount_() }); // nur Anzahlen, keine Namen
+  return json_({ ok: false, error: 'Unbekannte Aktion' });
 }
 
 function rows_(name) {
@@ -62,7 +64,7 @@ function doPost(e) {
     try { data = JSON.parse(e.postData.contents); } catch (err) { return json_({ ok: false, error: 'Ungültige Anfrage' }); }
     if (!data || typeof data !== 'object') return json_({ ok: false, error: 'Ungültige Anfrage' });
     if (data.website) return json_({ ok: false, error: 'Ungültige Anfrage' }); // Honeypot
-    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_, programmpunkt: programmpunkt_ };
+    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_, programmpunkt: programmpunkt_, geschenk: geschenk_ };
     var fn = handlers[data.action];
     if (!fn) return json_({ ok: false, error: 'Unbekannte Aktion' });
     lock.waitLock(20000);
@@ -148,4 +150,19 @@ function programmpunkt_(d) {
   append_('Programmpunkte', [[now_(), str_(d.name, MAX_NAME, true, 'Name'), str_(d.kontakt, 200, true, 'Kontakt'),
     oneOf_(d.art, ['Rede', 'Spiel', 'Musik / Lied', 'Video / Diashow', 'Sonstiges'], 'Art'),
     str_(d.beschreibung, MAX_TEXT, true, 'Beschreibung'), dauer, str_(d.technik, 200, false, 'Technik')]]);
+}
+
+function geschenkeCount_() {
+  var count = {};
+  rows_('Geschenke_Reserviert').forEach(function (r) { var id = String(r[1]); if (id) count[id] = (count[id] || 0) + 1; });
+  return count;
+}
+
+function geschenk_(d) {
+  var id = String(d.geschenk_id || '');
+  if (!/^[a-z0-9_-]{1,40}$/i.test(id)) fail_('Ungültiges Geschenk.');
+  var max = Number(d.max);
+  if (!(max >= 1 && max <= 20)) fail_('Ungültiges Geschenk.');
+  if ((geschenkeCount_()[id] || 0) >= max) fail_('Das ist leider schon vergeben.');
+  append_('Geschenke_Reserviert', [[now_(), id, str_(d.was, 200, false, 'Geschenk'), str_(d.name, MAX_NAME, true, 'Name')]]);
 }
