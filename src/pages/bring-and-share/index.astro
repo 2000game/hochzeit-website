@@ -2,11 +2,13 @@
 import Base from '../../layouts/Base.astro';
 import FormEnd from '../../components/FormEnd.astro';
 import InactiveNote from '../../components/InactiveNote.astro';
+import { API_URL as API } from '../../data/config';
 ---
 <Base title="Bring & Share">
   <h1>Bring &amp; Share</h1>
   <p>Nach der Trauung gibt es einen Sektempfang. Sekt und Wasser haben wir, das Essen bringt Ihr mit. Trag unten ein, was Du mitbringst. Namen sind für alle sichtbar.</p>
   <InactiveNote />
+  {!API && <p class="todo">Beispieldaten zur Ansicht, solange das Formular nicht aktiv ist.</p>}
   <h2>Unsere Wünsche</h2>
   <div id="wishes" aria-live="polite">Wird geladen …</div>
   <h2>Schon eingetragen</h2>
@@ -28,10 +30,32 @@ import InactiveNote from '../../components/InactiveNote.astro';
     import { getJson, setupForm } from '../../scripts/forms';
     const $ = (id: string) => document.getElementById(id)!;
     const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+    // Beispieldaten, solange das Backend nicht angebunden ist (API_URL leer).
+    const DEMO = {
+      wuensche: [
+        { id: '1', was: 'Herzhaftes Fingerfood (z. B. Wraps, Quiche, Spieße)', gesucht: 8, offen: 5, hinweis: 'Bitte schon mundgerecht geschnitten' },
+        { id: '2', was: 'Blechkuchen', gesucht: 6, offen: 4, hinweis: '' },
+        { id: '3', was: 'Gemüsesticks mit Dip', gesucht: 4, offen: 3, hinweis: '' },
+        { id: '4', was: 'Obstplatte', gesucht: 3, offen: 0, hinweis: '' },
+        { id: '5', was: 'Süßes Fingerfood (Muffins, Cake Pops …)', gesucht: 5, offen: 4, hinweis: '' },
+        { id: '6', was: 'Brot mit Aufstrichen', gesucht: 3, offen: 3, hinweis: 'Gern auch vegan' },
+      ],
+      eintraege: [
+        { name: 'Anna & Tim', was: 'Herzhaftes Fingerfood', notiz: 'Gemüse-Quiche' },
+        { name: 'Familie Becker', was: 'Obstplatte', notiz: '' },
+        { name: 'Jonas', was: 'Blechkuchen', notiz: 'Zupfkuchen' },
+        { name: 'Oma Gerda', was: 'Blechkuchen', notiz: 'Apfelkuchen' },
+        { name: 'Lea', was: 'Gemüsesticks mit Dip', notiz: '' },
+        { name: 'Familie Yilmaz', was: 'Obstplatte', notiz: 'Melone' },
+        { name: 'Paul & Sophie', was: 'Herzhaftes Fingerfood', notiz: 'Wraps' },
+        { name: 'Miriam', was: 'Süßes Fingerfood', notiz: 'Muffins' },
+        { name: 'Daniel', was: 'Obstplatte', notiz: '' },
+        { name: 'Familie Schneider', was: 'Herzhaftes Fingerfood', notiz: 'Tomate-Mozzarella-Spieße' },
+      ],
+    };
     async function load() {
-      if (!API_URL) { $('wishes').textContent = 'Noch nicht aktiv.'; return; }
       try {
-        const d = await getJson('bringshare');
+        const d = API_URL ? await getJson('bringshare') : DEMO;
         const w: any[] = d.wuensche || [];
         $('wishes').innerHTML = w.length
           ? `<table class="wishes"><tr><th>Wunsch</th><th>Noch offen</th></tr>${w.map((x) => `<tr><td>${esc(x.was)}${x.hinweis ? `<br><small>${esc(x.hinweis)}</small>` : ''}</td><td>${x.offen} von ${x.gesucht}</td></tr>`).join('')}</table>`
