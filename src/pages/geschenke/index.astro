@@ -10,6 +10,9 @@ import { TRAUZEUGEN_API_URL } from '../../data/config';
 
   <h2>Unsere Wunschliste</h2>
   <p>Hier kannst Du ein Geschenk für Dich reservieren, damit nichts doppelt kommt. Die anderen Gäste sehen, was schon vergeben ist.</p>
+  <div class="kachel" id="gesperrt" hidden>
+    <p><strong>Für Euch gesperrt.</strong> Auf diesem Gerät ist der Spoiler-Schutz an, deshalb seht Ihr hier nicht, was reserviert ist.</p>
+  </div>
   <div class="kachel" id="spoiler">
     <p><strong>Lieber Felix, liebe Lou:</strong> ab hier bitte nicht weiter. Was reserviert ist, wollt Ihr ja nicht wissen.</p>
     <button type="button" id="open-list">Ich bin Gast: Liste öffnen</button>
@@ -44,6 +47,7 @@ import { TRAUZEUGEN_API_URL } from '../../data/config';
   <script>
     import { TRAUZEUGEN_API_URL as URL_ } from '../../data/config';
     import { setupForm } from '../../scripts/forms';
+    import { isBrautpaar } from '../../scripts/brautpaar';
     const $ = (id: string) => document.getElementById(id)!;
     const DEMO: Record<string, number> = { pfanne: 1, glaeser: 2 };
     const form = $('gift-form') as HTMLFormElement;
@@ -67,7 +71,10 @@ import { TRAUZEUGEN_API_URL } from '../../data/config';
       });
     }
 
+    if (isBrautpaar()) { $('spoiler').hidden = true; $('gesperrt').hidden = false; }
+
     $('open-list').addEventListener('click', () => {
+      if (isBrautpaar()) return;
       $('spoiler').hidden = true;
       $('gift-list').hidden = false;
       load();

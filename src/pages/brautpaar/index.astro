@@ -1,0 +1,21 @@
+---
+// Unverlinkte Seite: einmal auf jedem Gerät von Felix und Lou öffnen.
+// Setzt einen Merker (Cookie + localStorage), danach bleibt die Geschenkliste auf diesem Gerät gesperrt.
+// Aufheben: /brautpaar/?aus
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Spoiler-Schutz">
+  <h1>Spoiler-Schutz</h1>
+  <p id="status">Wird eingerichtet …</p>
+  <p><a href="/">Zur Startseite</a></p>
+  <script>
+    import { setBrautpaar } from '../../scripts/brautpaar';
+    const aus = new URLSearchParams(location.search).has('aus');
+    const ok = setBrautpaar(!aus);
+    document.getElementById('status')!.textContent = !ok
+      ? 'Dieser Browser lässt keine Speicherung zu (privater Modus?). Hier wirkt der Schutz nicht.'
+      : aus
+        ? 'Spoiler-Schutz auf diesem Gerät aufgehoben.'
+        : 'Erledigt: Auf diesem Gerät und in diesem Browser bleibt die Geschenkliste ab jetzt gesperrt.';
+  </script>
+</Base>

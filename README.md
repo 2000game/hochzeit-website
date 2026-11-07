@@ -49,3 +49,4 @@ Einrichtung siehe [apps-script/README.md](apps-script/README.md).
 - [ ] Texte, FAQ, Anreise (Parken, ÖPNV) ausfüllen
 - [ ] Design
 - [ ] Trauzeugen: Namen und Kontakt in `src/data/hochzeit.ts`, eigene Web-App für Programmpunkte (`PUBLIC_TRAUZEUGEN_API_URL`)
+- [ ] Spoiler-Schutz: auf jedem Gerät von Felix und Lou einmal `https://felixundlouheiraten.de/brautpaar/` öffnen (aufheben: `/brautpaar/?aus`)
