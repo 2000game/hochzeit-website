@@ -32,8 +32,8 @@ Einrichtung siehe [apps-script/README.md](apps-script/README.md).
 1. GitHub-Repo anlegen und pushen (Branch `main`).
 2. Settings → Pages → Source: **GitHub Actions**. Der Workflow `.github/workflows/deploy.yml` baut und veröffentlicht bei jedem Push.
 3. Optional: Repository-Variable `PUBLIC_API_URL` (Settings → Secrets and variables → Actions → Variables) mit der Web-App-URL.
-4. Eigene Domain: Datei `public/CNAME` mit der Domain als einziger Zeile anlegen (TODO) und `site` in `astro.config.mjs` setzen.
-5. DNS: für die Hauptdomain A-Records auf `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; für `www` ein CNAME auf `<github-user>.github.io`.
+4. Eigene Domain `felixundlouheiraten.de`: steht in `public/CNAME` und `site` in `astro.config.mjs`; in GitHub unter Settings → Pages eingetragen.
+5. DNS: für die Hauptdomain A-Records auf `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; für `www` ein CNAME auf `2000game.github.io`; DNS liegt bei Cloudflare (Registrar netcup), Einträge auf „DNS only“.
 6. Settings → Pages: Custom domain eintragen, **Enforce HTTPS** aktivieren.
 
 ## Offen
@@ -43,7 +43,7 @@ Einrichtung siehe [apps-script/README.md](apps-script/README.md).
 - [ ] Feier-Location (Name, Adresse, Uhrzeit, Karte)
 - [ ] Zusagefrist
 - [ ] Geschenke-Text
-- [ ] Domain, `public/CNAME`, `site` in `astro.config.mjs`
+- [x] Domain `felixundlouheiraten.de`
 - [ ] Impressum und Datenschutz (Rechtstexte)
 - [ ] Apps Script einrichten, URL eintragen, Wünsche für Bring & Share füllen
 - [ ] Texte, FAQ, Anreise (Parken, ÖPNV) ausfüllen
