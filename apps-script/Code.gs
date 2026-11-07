@@ -7,8 +7,7 @@ var TABS = {
   Zusagen_Trauung: ['id', 'zeitpunkt', 'person', 'kommt', 'nachricht'],
   Zusagen_Feier: ['id', 'zeitpunkt', 'person', 'kommt', 'essen', 'allergien', 'kind', 'alter', 'nachricht'],
   BringShare_Wuensche: ['id', 'was', 'anzahl_gesucht', 'hinweis'],
-  BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz'],
-  Feedback: ['zeitpunkt', 'name', 'text']
+  BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz']
 };
 var MAX_NAME = 80;
 var MAX_TEXT = 1000;
@@ -62,7 +61,7 @@ function doPost(e) {
     try { data = JSON.parse(e.postData.contents); } catch (err) { return json_({ ok: false, error: 'Ungültige Anfrage' }); }
     if (!data || typeof data !== 'object') return json_({ ok: false, error: 'Ungültige Anfrage' });
     if (data.website) return json_({ ok: false, error: 'Ungültige Anfrage' }); // Honeypot
-    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_, feedback: feedback_ };
+    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_ };
     var fn = handlers[data.action];
     if (!fn) return json_({ ok: false, error: 'Unbekannte Aktion' });
     lock.waitLock(20000);
@@ -140,8 +139,4 @@ function bringshare_(d) {
     if (!was) was = w.was;
   } else if (!was) fail_('Bitte gib an, was Du mitbringst.');
   append_('BringShare_Eintraege', [[now_(), name, wunschId, was, notiz]]);
-}
-
-function feedback_(d) {
-  append_('Feedback', [[now_(), str_(d.name, MAX_NAME, false, 'Name'), str_(d.text, MAX_TEXT, true, 'Nachricht')]]);
 }
