@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import FormEnd from '../../components/FormEnd.astro';
+import InactiveNote from '../../components/InactiveNote.astro';
+---
+<Base title="Feedback">
+  <h1>Feedback</h1>
+  <p>Fragen, Ideen, Lob oder später ein Rückblick: Schreib uns einfach.</p>
+  <InactiveNote />
+  <form id="fb-form" data-action="feedback">
+    <label for="fb-name">Name (optional)</label>
+    <input id="fb-name" type="text" name="name" maxlength="80" />
+    <label for="fb-text">Nachricht</label>
+    <textarea id="fb-text" name="text" rows="5" maxlength="1000" required></textarea>
+    <FormEnd label="Senden" />
+  </form>
+  <script>
+    import { setupForm } from '../../scripts/forms';
+    setupForm(document.getElementById('fb-form') as HTMLFormElement);
+  </script>
+</Base>

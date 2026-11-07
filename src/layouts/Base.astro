@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import { paar } from '../data/hochzeit';
+import { FEIER_FLAG } from '../data/config';
+interface Props { title: string; isFeier?: boolean }
+const { title, isFeier = false } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/', label: 'Start' },
+  { href: '/ablauf/', label: 'Ablauf' },
+  { href: '/zusage/', label: 'Zusage' },
+  { href: '/bring-and-share/', label: 'Bring & Share' },
+  { href: '/anreise/', label: 'Anreise' },
+  { href: '/geschenke/', label: 'Geschenke' },
+  { href: '/faq/', label: 'FAQ' },
+  { href: '/feedback/', label: 'Feedback' },
+  { href: '/fotos/', label: 'Fotos' },
+];
+// Nur für Feier-Gäste sichtbar (nach Besuch von /feier/ oder auf /feier/-Seiten).
+const feierNav = [
+  { href: '/feier/', label: 'Feier' },
+  { href: '/feier/zusage/', label: 'Zusage Feier' },
+];
+const fullTitle = title === 'Start' ? `${paar.name1} & ${paar.name2}` : `${title} – ${paar.name1} & ${paar.name2}`;
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{fullTitle}</title>
+  </head>
+  <body data-feier={isFeier ? '1' : '0'} data-feier-flag={FEIER_FLAG}>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="/">{paar.name1} & {paar.name2}</a>
+        <nav aria-label="Hauptnavigation">
+          <ul>
+            {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+            {feierNav.map((n) => <li data-feier-only hidden={!isFeier}><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap"><slot /></main>
+    <footer class="site">
+      <div class="wrap"><a href="/impressum/">Impressum &amp; Datenschutz</a></div>
+    </footer>
+    <script>
+      // Feier-Flag: auf /feier/-Seiten setzen, dann Feier-Navigation einblenden.
+      const body = document.body;
+      const key = body.dataset.feierFlag || 'hochzeit-feier';
+      let show = body.dataset.feier === '1';
+      try {
+        if (show) localStorage.setItem(key, '1');
+        else show = localStorage.getItem(key) === '1';
+      } catch (e) { /* ohne localStorage funktioniert die Seite trotzdem */ }
+      if (show) document.querySelectorAll<HTMLElement>('[data-feier-only]').forEach((el) => (el.hidden = false));
+    </script>
+  </body>
+</html>

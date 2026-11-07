@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import { trauung, feier } from '../../data/hochzeit';
+---
+<Base title="Anreise">
+  <h1>Anreise &amp; Parken</h1>
+  <h2>Trauung &amp; Sektempfang</h2>
+  <p>{trauung.name}<br />{trauung.adresse}</p>
+  {trauung.mapsUrl && <p><a href={trauung.mapsUrl}>Karte</a></p>}
+  <p class="todo">TODO: Parkmöglichkeiten an der Kirche</p>
+  <h2>ÖPNV</h2>
+  <p class="todo">TODO: Haltestelle / Verbindung ab Mainz Hbf</p>
+  <h2>Für Feier-Gäste: Die Feier-Location</h2>
+  <p>{feier.name}<br />{feier.adresse}</p>
+  {feier.mapsUrl && <p><a href={feier.mapsUrl}>Karte</a></p>}
+  <p>Wir organisieren keinen Shuttle. Bitte bildet Fahrgemeinschaften. <span class="todo">TODO: Parken</span></p>
+  <h2>Übernachtung</h2>
+  <p>Wir kümmern uns nicht um Hotels. <span class="todo">TODO: Tipps (optional)</span></p>
+</Base>

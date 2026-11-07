@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import FormEnd from '../../components/FormEnd.astro';
+import InactiveNote from '../../components/InactiveNote.astro';
+---
+<Base title="Bring & Share">
+  <h1>Bring &amp; Share</h1>
+  <p>Nach der Trauung gibt es einen Sektempfang. Sekt und Wasser haben wir, das Essen bringt Ihr mit. Trag unten ein, was Du mitbringst. Namen sind für alle sichtbar.</p>
+  <InactiveNote />
+  <h2>Unsere Wünsche</h2>
+  <div id="wishes" aria-live="polite">Wird geladen …</div>
+  <h2>Schon eingetragen</h2>
+  <ul id="entries"></ul>
+  <h2>Ich bringe etwas mit</h2>
+  <form id="bs-form" data-action="bringshare">
+    <label for="bs-name">Dein Name</label>
+    <input id="bs-name" type="text" name="name" maxlength="80" required />
+    <label for="bs-wish">Was bringst Du mit?</label>
+    <select id="bs-wish" name="wunsch_id"><option value="">Sonstiges (selbst eintragen)</option></select>
+    <label for="bs-was">Was genau? (bei Sonstiges Pflicht)</label>
+    <input id="bs-was" type="text" name="was" maxlength="200" />
+    <label for="bs-notiz">Hinweis (optional)</label>
+    <input id="bs-notiz" type="text" name="notiz" maxlength="1000" />
+    <FormEnd label="Eintragen" />
+  </form>
+  <script>
+    import { API_URL } from '../../data/config';
+    import { getJson, setupForm } from '../../scripts/forms';
+    const $ = (id: string) => document.getElementById(id)!;
+    const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+    async function load() {
+      if (!API_URL) { $('wishes').textContent = 'Noch nicht aktiv.'; return; }
+      try {
+        const d = await getJson('bringshare');
+        const w: any[] = d.wuensche || [];
+        $('wishes').innerHTML = w.length
+          ? `<table class="wishes"><tr><th>Wunsch</th><th>Noch offen</th></tr>${w.map((x) => `<tr><td>${esc(x.was)}${x.hinweis ? `<br><small>${esc(x.hinweis)}</small>` : ''}</td><td>${x.offen} von ${x.gesucht}</td></tr>`).join('')}</table>`
+          : 'Noch keine Wünsche eingetragen.';
+        const sel = $('bs-wish') as HTMLSelectElement;
+        sel.length = 1;
+        w.filter((x) => x.offen > 0).forEach((x) => sel.add(new Option(`${x.was} (${x.offen} offen)`, x.id)));
+        const e: any[] = d.eintraege || [];
+        $('entries').innerHTML = e.length ? e.map((x) => `<li><strong>${esc(x.name)}</strong>: ${esc(x.was)}${x.notiz ? ` <small>(${esc(x.notiz)})</small>` : ''}</li>`).join('') : '<li>Noch niemand.</li>';
+      } catch { $('wishes').textContent = 'Die Liste konnte nicht geladen werden.'; }
+    }
+    setupForm($('bs-form') as HTMLFormElement, load);
+    load();
+  </script>
+</Base>

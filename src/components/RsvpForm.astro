@@ -1,0 +1,45 @@
+---
+import FormEnd from './FormEnd.astro';
+import InactiveNote from './InactiveNote.astro';
+interface Props { variant: 'trauung' | 'feier' }
+const { variant } = Astro.props;
+const feier = variant === 'feier';
+const action = feier ? 'zusage_feier' : 'zusage_trauung';
+---
+<InactiveNote />
+<form data-rsvp data-action={action} data-reset="no">
+  <div class="persons"></div>
+  <p><button type="button" class="secondary add-person">+ Weitere Person</button></p>
+  <template>
+    <fieldset class="person">
+      <legend class="person-title">Person</legend>
+      <label>Name <input type="text" data-f="name" maxlength="80" required /></label>
+      <label>Kommst Du?
+        <select data-f="kommt" required>
+          <option value="ja">Ja, ich komme</option>
+          <option value="nein">Nein, leider nicht</option>
+        </select>
+      </label>
+      {feier && (<>
+        <label>Essen
+          <select data-f="essen">
+            <option value="alles">Alles</option>
+            <option value="vegetarisch">Vegetarisch</option>
+            <option value="vegan">Vegan</option>
+          </select>
+        </label>
+        <label>Allergien / Unverträglichkeiten <input type="text" data-f="allergien" maxlength="1000" /></label>
+        <label class="inline"><input type="checkbox" data-f="kind" /> Kind</label>
+        <label>Alter (bei Kindern) <input type="number" data-f="alter" min="0" max="17" /></label>
+      </>)}
+      <button type="button" class="secondary remove">Person entfernen</button>
+    </fieldset>
+  </template>
+  {feier && <label>Musikwunsch für die Playlist (optional) <input type="text" name="song" maxlength="200" /></label>}
+  <label>Nachricht an uns (optional) <textarea name="nachricht" rows="3" maxlength="1000"></textarea></label>
+  <FormEnd label="Zusage senden" />
+</form>
+<script>
+  import { setupForm, setupPersons } from '../scripts/forms';
+  document.querySelectorAll<HTMLFormElement>('form[data-rsvp]').forEach((f) => { setupPersons(f); setupForm(f); });
+</script>

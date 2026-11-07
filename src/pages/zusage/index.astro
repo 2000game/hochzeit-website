@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import RsvpForm from '../../components/RsvpForm.astro';
+import { termin } from '../../data/hochzeit';
+---
+<Base title="Zusage">
+  <h1>Zusage zu Trauung &amp; Sektempfang</h1>
+  <p>Bitte sagt pro Haushalt zu, spätestens bis <strong>{termin.zusageBis}</strong>. Trag alle Personen ein, die zu Euch gehören.</p>
+  <RsvpForm variant="trauung" />
+</Base>

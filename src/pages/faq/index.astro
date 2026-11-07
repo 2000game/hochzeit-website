@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import { faq } from '../../data/hochzeit';
+---
+<Base title="FAQ">
+  <h1>Häufige Fragen</h1>
+  {faq.map((i) => <details><summary>{i.f}</summary><p>{i.a}</p></details>)}
+</Base>

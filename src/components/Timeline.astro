@@ -1,0 +1,7 @@
+---
+interface Props { items: { zeit: string; titel: string; text: string }[] }
+const { items } = Astro.props;
+---
+<ol class="timeline">
+  {items.map((i) => <li><strong>{i.zeit}</strong> {i.titel}<br /><span>{i.text}</span></li>)}
+</ol>

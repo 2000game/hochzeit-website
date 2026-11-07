@@ -1,0 +1,53 @@
+/* EIN Stylesheet. Für das spätere Design: Variablen in :root ändern oder Datei ersetzen. */
+:root {
+  --color-bg: #fbfaf7;
+  --color-text: #222;
+  --color-muted: #666;
+  --color-accent: #6b7a5c;
+  --color-accent-text: #fff;
+  --color-border: #d9d6cf;
+  --color-error: #a33;
+  --color-ok: #2d6a3e;
+  --font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --space-1: .25rem; --space-2: .5rem; --space-3: 1rem; --space-4: 1.5rem; --space-5: 3rem;
+  --radius: 6px;
+  --max-width: 42rem;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--color-bg); color: var(--color-text); font: 1rem/1.6 var(--font-body); }
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
+a { color: var(--color-accent); }
+.wrap { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-3); }
+header.site { border-bottom: 1px solid var(--color-border); }
+header.site .brand { display: block; padding: var(--space-3) 0 var(--space-2); font: 1.25rem var(--font-heading); text-decoration: none; color: inherit; }
+nav ul { list-style: none; margin: 0; padding: 0 0 var(--space-3); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+nav a[aria-current="page"] { font-weight: bold; }
+[data-feier-only][hidden] { display: none; }
+main { padding: var(--space-4) 0 var(--space-5); }
+footer.site { border-top: 1px solid var(--color-border); padding: var(--space-3) 0; color: var(--color-muted); font-size: .9rem; }
+.todo { background: #fff3b0; padding: 0 .2em; }
+.card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); margin: var(--space-3) 0; }
+.timeline { list-style: none; padding: 0; }
+.timeline li { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
+.timeline strong { display: inline-block; min-width: 6rem; }
+.countdown { font: 1.5rem var(--font-heading); }
+/* Formulare */
+form label { display: block; margin: var(--space-3) 0 var(--space-1); font-weight: 600; }
+form .inline { display: flex; align-items: center; gap: var(--space-2); font-weight: normal; }
+input[type=text], input[type=number], select, textarea {
+  width: 100%; padding: .6rem; font: inherit; border: 1px solid var(--color-border); border-radius: var(--radius); background: #fff;
+}
+button, .button { font: inherit; padding: .7rem 1.2rem; border: 0; border-radius: var(--radius); background: var(--color-accent); color: var(--color-accent-text); cursor: pointer; text-decoration: none; display: inline-block; }
+button.secondary { background: transparent; color: var(--color-accent); border: 1px solid var(--color-accent); }
+button:disabled { opacity: .6; cursor: wait; }
+.person { border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); margin: var(--space-3) 0; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-msg { margin-top: var(--space-3); }
+.form-msg.ok { color: var(--color-ok); }
+.form-msg.error { color: var(--color-error); }
+.inactive-note { background: #f1efe8; padding: var(--space-3); border-radius: var(--radius); }
+details { border-bottom: 1px solid var(--color-border); padding: var(--space-2) 0; }
+summary { cursor: pointer; font-weight: 600; }
+table.wishes { width: 100%; border-collapse: collapse; }
+table.wishes th, table.wishes td { text-align: left; padding: var(--space-2); border-bottom: 1px solid var(--color-border); }

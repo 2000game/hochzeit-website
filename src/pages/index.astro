@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { paar, termin, trauung } from '../data/hochzeit';
+---
+<Base title="Start">
+  <h1>{paar.name1} & {paar.name2}</h1>
+  <p>Wir heiraten!</p>
+  <p><strong>{termin.datumText}</strong><br />Trauung: {trauung.name}, {trauung.adresse}</p>
+  <p class="countdown" id="countdown" data-target={termin.datumIso} hidden></p>
+  <p>Schön, dass Du dabei bist. Hier findest Du alles Wichtige rund um unseren Tag.</p>
+  <ul>
+    <li><a href="/ablauf/">Ablauf von Trauung und Sektempfang</a></li>
+    <li><a href="/zusage/">Zusagen</a></li>
+    <li><a href="/bring-and-share/">Bring &amp; Share: Was bringst Du mit?</a></li>
+    <li><a href="/anreise/">Anreise &amp; Parken</a></li>
+    <li><a href="/faq/">Häufige Fragen</a></li>
+  </ul>
+  <script>
+    const el = document.getElementById('countdown');
+    const t = el?.dataset.target ? new Date(el.dataset.target).getTime() : NaN;
+    if (el && !isNaN(t)) {
+      const tick = () => {
+        const d = t - Date.now();
+        if (d <= 0) { el.textContent = 'Heute ist es so weit!'; return; }
+        el.textContent = `Noch ${Math.ceil(d / 86400000)} Tage`;
+      };
+      el.hidden = false; tick(); setInterval(tick, 60000);
+    }
+  </script>
+</Base>

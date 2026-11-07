@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import Timeline from '../../components/Timeline.astro';
+import { ablaufFeier, feier } from '../../data/hochzeit';
+---
+<Base title="Feier" isFeier>
+  <h1>Die Feier</h1>
+  <p>Du gehörst zum Kreis, der am Abend mit uns weiterfeiert. Wir freuen uns sehr! <span class="todo">TODO: Text</span></p>
+  <h2>Ablauf</h2>
+  <Timeline items={ablaufFeier} />
+  <h2>Ort</h2>
+  <p>{feier.name}<br />{feier.adresse}<br />Ende: {feier.ende}</p>
+  {feier.mapsUrl && <p><a href={feier.mapsUrl}>Auf der Karte ansehen</a></p>}
+  <p><a class="button" href="/feier/zusage/">Zur Zusage für die Feier</a></p>
+</Base>

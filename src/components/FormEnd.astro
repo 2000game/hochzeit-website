@@ -1,0 +1,10 @@
+---
+// Gemeinsamer Formularabschluss: Honeypot, Absende-Button, Statusmeldung.
+interface Props { label?: string }
+const { label = 'Absenden' } = Astro.props;
+---
+<div class="hp" aria-hidden="true">
+  <label>Bitte leer lassen <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+</div>
+<button type="submit">{label}</button>
+<p class="form-msg" role="status" aria-live="polite"></p>

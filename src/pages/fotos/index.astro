@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { fotos } from '../../data/hochzeit';
+---
+<Base title="Fotos">
+  <h1>Fotos</h1>
+  {!fotos.galerieUrl && !fotos.gaesteAlbumUrl
+    ? <p>Die Fotos gibt es hier nach der Hochzeit.</p>
+    : <ul>
+        {fotos.galerieUrl && <li><a href={fotos.galerieUrl}>Galerie des Fotografen</a></li>}
+        {fotos.gaesteAlbumUrl && <li><a href={fotos.gaesteAlbumUrl}>Gäste-Album: lade Deine eigenen Fotos hoch</a></li>}
+      </ul>}
+  <p><small>Die Links sind nur für Gäste. Bitte teile sie nicht öffentlich.</small></p>
+</Base>
