@@ -35,7 +35,6 @@ const action = feier ? 'zusage_feier' : 'zusage_trauung';
       <button type="button" class="secondary remove">Person entfernen</button>
     </fieldset>
   </template>
-  {feier && <label>Musikwunsch für die Playlist (optional) <input type="text" name="song" maxlength="200" /></label>}
   <label>Nachricht an uns (optional) <textarea name="nachricht" rows="3" maxlength="1000"></textarea></label>
   <FormEnd label="Zusage senden" />
 </form>

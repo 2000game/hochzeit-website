@@ -39,7 +39,7 @@ export const ablaufFeier = [
   { zeit: 'TODO', titel: 'Fahrt zur Location', text: 'Jeder fährt selbst. Adresse siehe unten.' },
   { zeit: 'TODO', titel: 'Ankommen', text: 'Garten, Getränke, Plaudern.' },
   { zeit: 'TODO', titel: 'Grillbuffet', text: 'Gartenparty-Stil, für alle ist etwas dabei.' },
-  { zeit: 'TODO', titel: 'Feiern', text: 'Unsere Playlist läuft. Wünsche gern bei der Zusage eintragen.' },
+  { zeit: 'TODO', titel: 'Feiern', text: 'Unsere Playlist läuft.' },
   { zeit: 'ca. 23:00', titel: 'Ende', text: 'Wir verabschieden uns gemeinsam.' },
 ];
 

@@ -5,7 +5,7 @@
 
 var TABS = {
   Zusagen_Trauung: ['id', 'zeitpunkt', 'person', 'kommt', 'nachricht'],
-  Zusagen_Feier: ['id', 'zeitpunkt', 'person', 'kommt', 'essen', 'allergien', 'kind', 'alter', 'song', 'nachricht'],
+  Zusagen_Feier: ['id', 'zeitpunkt', 'person', 'kommt', 'essen', 'allergien', 'kind', 'alter', 'nachricht'],
   BringShare_Wuensche: ['id', 'was', 'anzahl_gesucht', 'hinweis'],
   BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz'],
   Feedback: ['zeitpunkt', 'name', 'text']
@@ -117,13 +117,13 @@ function zusageTrauung_(d) {
 
 function zusageFeier_(d) {
   var list = persons_(d);
-  var id = id_(), ts = now_(), msg = str_(d.nachricht, MAX_TEXT, false, 'Nachricht'), song = str_(d.song, 200, false, 'Musikwunsch');
+  var id = id_(), ts = now_(), msg = str_(d.nachricht, MAX_TEXT, false, 'Nachricht');
   var rows = list.map(function (p) {
     var alter = p.alter === '' || p.alter === undefined || p.alter === null ? '' : Number(p.alter);
     if (alter !== '' && (isNaN(alter) || alter < 0 || alter > 120)) fail_('Alter ungültig.');
     return [id, ts, str_(p.name, MAX_NAME, true, 'Name'), oneOf_(p.kommt, ['ja', 'nein'], 'Zusage'),
       oneOf_(p.essen || 'alles', ['alles', 'vegetarisch', 'vegan'], 'Essenswunsch'),
-      str_(p.allergien, MAX_TEXT, false, 'Allergien'), p.kind ? 'ja' : 'nein', alter, song, msg];
+      str_(p.allergien, MAX_TEXT, false, 'Allergien'), p.kind ? 'ja' : 'nein', alter, msg];
   });
   append_('Zusagen_Feier', rows);
 }
