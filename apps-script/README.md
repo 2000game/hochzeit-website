@@ -18,10 +18,10 @@ Hinweise:
 
 ## Zwei Sheets, ein Skript
 
-Drive-Ordner „Hochzeit Website“:
+Drive-Ordner „Hochzeit“:
 
 - `Hochzeit Website – Antworten`: Zusagen und Bring & Share. Hier hängt das Skript dran.
-- Unterordner `NICHT GUCKEN – Überraschungen` → `NICHT GUCKEN – Programmpunkte & Geschenke`:
+- Unterordner `Nicht für das Brautpaar` → `Nicht für das Brautpaar – Programmpunkte & Geschenke`:
   Programmpunkte und Geschenk-Reservierungen. Das Skript schreibt per `UEBERRASCHUNG_SHEET_ID` hinein.
 
 `setup()` legt die Tabs in beiden Sheets an. Beim ersten Ausführen fragt Google nach Zugriff auf
