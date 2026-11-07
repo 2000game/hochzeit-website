@@ -1,0 +1,19 @@
+---
+// Kachel: Ansprechpartner bei Fragen (Trauzeugen).
+import { trauzeugen } from '../data/hochzeit';
+const namen = trauzeugen.map((t) => t.name).join(' und ');
+---
+<aside class="kachel">
+  <h2>Fragen?</h2>
+  <p>Melde Dich gern bei {namen}, unseren Trauzeugen.</p>
+  <ul>
+    {trauzeugen.map((t) => (
+      <li>
+        <strong>{t.name}</strong>
+        {t.telefon && <> · <a href={`tel:${t.telefon.replace(/\s/g, '')}`}>{t.telefon}</a></>}
+        {t.mail && <> · <a href={`mailto:${t.mail}`}>{t.mail}</a></>}
+      </li>
+    ))}
+  </ul>
+  <p>Du möchtest bei der Feier etwas beitragen? <a href="/programmpunkt/">Programmpunkt anmelden</a></p>
+</aside>

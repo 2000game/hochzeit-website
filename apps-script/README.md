@@ -15,3 +15,12 @@ Hinweise:
 - Per GET ist nur `?action=bringshare` lesbar (Wünsche und Eintragende). Zusagen werden nie ausgeliefert.
 - Das Sheet selbst bleibt privat. Nicht freigeben.
 - Eingaben werden geprüft (Pflichtfelder, Längen, max. 10 Personen, Honeypot) und gegen Formel-Einschleusung entschärft.
+
+## Programmpunkte (für die Trauzeugen)
+
+Die Anmeldungen für Programmpunkte sollen beim Brautpaar nicht ankommen. Deshalb richten die Trauzeugen
+dasselbe Skript in **ihrem eigenen** Google-Konto ein:
+
+1. Neues Google Sheet anlegen, Code.gs wie oben einfügen, `setup` ausführen, als Web-App bereitstellen.
+2. Die Web-App-URL in GitHub als Repository-Variable `PUBLIC_PROGRAMM_API_URL` eintragen (oder in `src/data/config.ts`).
+3. Die Anmeldungen landen im Tab `Programmpunkte` ihres Sheets.

@@ -7,7 +7,8 @@ var TABS = {
   Zusagen_Trauung: ['id', 'zeitpunkt', 'person', 'kommt', 'nachricht'],
   Zusagen_Feier: ['id', 'zeitpunkt', 'person', 'kommt', 'essen', 'allergien', 'kind', 'alter', 'nachricht'],
   BringShare_Wuensche: ['id', 'was', 'anzahl_gesucht', 'hinweis'],
-  BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz']
+  BringShare_Eintraege: ['zeitpunkt', 'name', 'wunsch_id', 'was', 'notiz'],
+  Programmpunkte: ['zeitpunkt', 'name', 'kontakt', 'art', 'beschreibung', 'dauer_min', 'technik']
 };
 var MAX_NAME = 80;
 var MAX_TEXT = 1000;
@@ -61,7 +62,7 @@ function doPost(e) {
     try { data = JSON.parse(e.postData.contents); } catch (err) { return json_({ ok: false, error: 'Ungültige Anfrage' }); }
     if (!data || typeof data !== 'object') return json_({ ok: false, error: 'Ungültige Anfrage' });
     if (data.website) return json_({ ok: false, error: 'Ungültige Anfrage' }); // Honeypot
-    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_ };
+    var handlers = { zusage_trauung: zusageTrauung_, zusage_feier: zusageFeier_, bringshare: bringshare_, programmpunkt: programmpunkt_ };
     var fn = handlers[data.action];
     if (!fn) return json_({ ok: false, error: 'Unbekannte Aktion' });
     lock.waitLock(20000);
@@ -139,4 +140,12 @@ function bringshare_(d) {
     if (!was) was = w.was;
   } else if (!was) fail_('Bitte gib an, was Du mitbringst.');
   append_('BringShare_Eintraege', [[now_(), name, wunschId, was, notiz]]);
+}
+
+function programmpunkt_(d) {
+  var dauer = d.dauer === '' || d.dauer == null ? '' : Number(d.dauer);
+  if (dauer !== '' && !(dauer >= 1 && dauer <= 60)) fail_('Bitte eine Dauer zwischen 1 und 60 Minuten angeben.');
+  append_('Programmpunkte', [[now_(), str_(d.name, MAX_NAME, true, 'Name'), str_(d.kontakt, 200, true, 'Kontakt'),
+    oneOf_(d.art, ['Rede', 'Spiel', 'Musik / Lied', 'Video / Diashow', 'Sonstiges'], 'Art'),
+    str_(d.beschreibung, MAX_TEXT, true, 'Beschreibung'), dauer, str_(d.technik, 200, false, 'Technik')]]);
 }

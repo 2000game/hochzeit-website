@@ -23,6 +23,7 @@ jobs:
         env:
           # TODO: als Repository-Variable "PUBLIC_API_URL" (Settings -> Variables) anlegen
           PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+          PUBLIC_PROGRAMM_API_URL: ${{ vars.PUBLIC_PROGRAMM_API_URL }}
   deploy:
     needs: build
     runs-on: ubuntu-latest

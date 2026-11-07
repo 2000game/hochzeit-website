@@ -2,9 +2,9 @@ import { API_URL } from '../data/config';
 
 type Json = Record<string, unknown>;
 
-export async function postJson(payload: Json): Promise<{ ok: boolean; error?: string }> {
+export async function postJson(payload: Json, url = API_URL): Promise<{ ok: boolean; error?: string }> {
   // text/plain vermeidet den CORS-Preflight bei Apps Script.
-  const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
   return res.json();
 }
 
@@ -33,17 +33,17 @@ export function collect(form: HTMLFormElement): Json {
   return data;
 }
 
-export function setupForm(form: HTMLFormElement, onSuccess?: () => void) {
+export function setupForm(form: HTMLFormElement, onSuccess?: () => void, url = API_URL) {
   const msg = form.querySelector<HTMLElement>('.form-msg')!;
   const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
   const show = (text: string, cls: 'ok' | 'error') => { msg.textContent = text; msg.className = `form-msg ${cls}`; };
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    if (!API_URL) return show('Die Formulare sind noch nicht aktiv.', 'error');
+    if (!url) return show('Die Formulare sind noch nicht aktiv.', 'error');
     btn.disabled = true;
     show('Wird gesendet …', 'ok');
     try {
-      const r = await postJson({ action: form.dataset.action, ...collect(form) });
+      const r = await postJson({ action: form.dataset.action, ...collect(form) }, url);
       if (r.ok) {
         show('Danke! Das hat geklappt.', 'ok');
         if (form.dataset.reset !== 'no') form.reset();

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { paar, termin, trauung, bilder } from '../data/hochzeit';
+import Kontakt from '../components/Kontakt.astro';
 ---
 <Base title="Start">
   <h1>{paar.name1} & {paar.name2}</h1>
@@ -17,6 +18,7 @@ import { paar, termin, trauung, bilder } from '../data/hochzeit';
     <li><a href="/anreise/">Anreise &amp; Parken</a></li>
     <li><a href="/faq/">Häufige Fragen</a></li>
   </ul>
+  <Kontakt />
   <script>
     const el = document.getElementById('countdown');
     const t = el?.dataset.target ? new Date(el.dataset.target).getTime() : NaN;

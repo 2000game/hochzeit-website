@@ -53,3 +53,6 @@ table.wishes th, table.wishes td { text-align: left; padding: var(--space-2); bo
 .hero { width: 100%; height: auto; aspect-ratio: 12 / 7; object-fit: cover; border-radius: var(--radius); margin: var(--space-3) 0; }
 .galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-2); margin: var(--space-3) 0; }
 .galerie img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }
+.kachel { background: var(--color-surface, #f6f4ef); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); margin: var(--space-4, 2rem) 0; }
+.kachel h2 { margin-top: 0; }
+.kachel ul { padding-left: 1.2em; }

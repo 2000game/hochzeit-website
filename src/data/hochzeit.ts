@@ -78,3 +78,9 @@ export const bilder = {
     (s) => `https://picsum.photos/seed/${s}/600/600`,
   ),
 };
+
+// Ansprechpartner bei Fragen und für Programmpunkte. Telefonnummern stehen öffentlich auf der Seite.
+export const trauzeugen = [
+  { name: 'TODO: Trauzeuge/Trauzeugin 1', telefon: '', mail: '' }, // TODO
+  { name: 'TODO: Trauzeuge/Trauzeugin 2', telefon: '', mail: '' }, // TODO
+];
