@@ -16,12 +16,14 @@ Hinweise:
 - Das Sheet selbst bleibt privat. Nicht freigeben.
 - Eingaben werden geprüft (Pflichtfelder, Längen, max. 10 Personen, Honeypot) und gegen Formel-Einschleusung entschärft.
 
-## Programmpunkte und Geschenke (für die Trauzeugen)
+## Zwei Sheets, ein Skript
 
-Programmpunkte und Geschenk-Reservierungen soll das Brautpaar nicht sehen. Deshalb richten die Trauzeugen
-dasselbe Skript in **ihrem eigenen** Google-Konto ein:
+Drive-Ordner „Hochzeit Website“:
 
-1. Neues Google Sheet anlegen, Code.gs wie oben einfügen, `setup` ausführen, als Web-App bereitstellen.
-2. Die Web-App-URL in GitHub als Repository-Variable `PUBLIC_TRAUZEUGEN_API_URL` eintragen (oder in `src/data/config.ts`).
-3. Anmeldungen landen im Tab `Programmpunkte`, Reservierungen im Tab `Geschenke_Reserviert` ihres Sheets.
-   Die Website liest per GET nur die Anzahl je Geschenk, nie Namen. Versehentliche Reservierung: Zeile löschen.
+- `Hochzeit Website – Antworten`: Zusagen und Bring & Share. Hier hängt das Skript dran.
+- Unterordner `NICHT GUCKEN – Überraschungen` → `NICHT GUCKEN – Programmpunkte & Geschenke`:
+  Programmpunkte und Geschenk-Reservierungen. Das Skript schreibt per `UEBERRASCHUNG_SHEET_ID` hinein.
+
+`setup()` legt die Tabs in beiden Sheets an. Beim ersten Ausführen fragt Google nach Zugriff auf
+„alle Tabellen“, weil das Skript das zweite Sheet per ID öffnet. Die Trauzeugen können als Bearbeiter
+für den NICHT-GUCKEN-Ordner freigegeben werden, um z. B. versehentliche Reservierungen zu löschen.

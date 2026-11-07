@@ -48,5 +48,5 @@ Einrichtung siehe [apps-script/README.md](apps-script/README.md).
 - [ ] Apps Script einrichten, URL eintragen, Wünsche für Bring & Share füllen
 - [ ] Texte, FAQ, Anreise (Parken, ÖPNV) ausfüllen
 - [ ] Design
-- [ ] Trauzeugen: Namen und Kontakt in `src/data/hochzeit.ts`, eigene Web-App für Programmpunkte (`PUBLIC_TRAUZEUGEN_API_URL`)
+- [ ] Trauzeugen: Namen und Kontakt in `src/data/hochzeit.ts`
 - [ ] Spoiler-Schutz: auf jedem Gerät von Felix und Lou einmal `https://felixundlouheiraten.de/brautpaar/` öffnen (aufheben: `/brautpaar/?aus`)

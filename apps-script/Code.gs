@@ -11,14 +11,25 @@ var TABS = {
   Programmpunkte: ['zeitpunkt', 'name', 'kontakt', 'art', 'beschreibung', 'dauer_min', 'technik'],
   Geschenke_Reserviert: ['zeitpunkt', 'geschenk_id', 'was', 'name']
 };
+// Programmpunkte und Geschenk-Reservierungen landen in einem eigenen Sheet im Drive-Ordner
+// "NICHT GUCKEN", damit das Brautpaar sie nicht aus Versehen sieht.
+var UEBERRASCHUNG_SHEET_ID = '1Vm5FzVxePHy9UtxkJHbBTgBXQPDrQfsZTm3oxyRex-Y';
+var UEBERRASCHUNG_TABS = ['Programmpunkte', 'Geschenke_Reserviert'];
+
+function ss_(name) {
+  return UEBERRASCHUNG_TABS.indexOf(name) !== -1
+    ? SpreadsheetApp.openById(UEBERRASCHUNG_SHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+}
+
 var MAX_NAME = 80;
 var MAX_TEXT = 1000;
 var MAX_PERSONS = 10;
 
-/** Einmal manuell ausführen: legt die Tabs mit Kopfzeilen an. */
+/** Einmal manuell ausführen: legt in beiden Sheets die Tabs mit Kopfzeilen an. */
 function setup() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
   Object.keys(TABS).forEach(function (name) {
+    var ss = ss_(name);
     var sh = ss.getSheetByName(name) || ss.insertSheet(name);
     sh.getRange(1, 1, 1, TABS[name].length).setValues([TABS[name]]).setFontWeight('bold');
     sh.setFrozenRows(1);
@@ -37,7 +48,7 @@ function doGet(e) {
 }
 
 function rows_(name) {
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+  var sh = ss_(name).getSheetByName(name);
   if (!sh || sh.getLastRow() < 2) return [];
   return sh.getRange(2, 1, sh.getLastRow() - 1, TABS[name].length).getValues();
 }
@@ -103,7 +114,7 @@ function now_() { return new Date(); }
 function id_() { return Utilities.getUuid().slice(0, 8); }
 function append_(name, rows) {
   if (!rows.length) return;
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+  var sh = ss_(name).getSheetByName(name);
   if (!sh) fail_('Tabelle fehlt (setup() ausführen).');
   sh.getRange(sh.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
 }

@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import FormEnd from '../../components/FormEnd.astro';
 import { geschenke } from '../../data/hochzeit';
-import { TRAUZEUGEN_API_URL } from '../../data/config';
+import { API_URL } from '../../data/config';
 ---
 <Base title="Geschenke">
   <h1>Geschenke</h1>
@@ -18,7 +18,7 @@ import { TRAUZEUGEN_API_URL } from '../../data/config';
   </div>
 
   <div id="gift-list" hidden>
-    {!TRAUZEUGEN_API_URL && <p class="todo">Beispieldaten zur Ansicht, solange die Reservierung nicht aktiv ist.</p>}
+    {!API_URL && <p class="todo">Beispieldaten zur Ansicht, solange die Reservierung nicht aktiv ist.</p>}
     <ul class="gifts">
       {geschenke.wuensche.map((g) => (
         <li class="gift" data-id={g.id} data-anzahl={g.anzahl}>
@@ -44,7 +44,7 @@ import { TRAUZEUGEN_API_URL } from '../../data/config';
   </div>
 
   <script>
-    import { TRAUZEUGEN_API_URL as URL_ } from '../../data/config';
+    import { API_URL as URL_ } from '../../data/config';
     import { setupForm } from '../../scripts/forms';
     import { isBrautpaar } from '../../scripts/brautpaar';
     const $ = (id: string) => document.getElementById(id)!;
