@@ -69,3 +69,12 @@ export const geschenke = {
 export const impressum = {
   name: 'TODO: Name', adresse: 'TODO: Anschrift', kontakt: 'TODO: E-Mail',
 };
+
+// TODO: Platzhalterbilder (picsum.photos) durch eigene Fotos in public/bilder/ ersetzen.
+export const bilder = {
+  start: 'https://picsum.photos/seed/hochzeit-start/1200/700',
+  feier: 'https://picsum.photos/seed/hochzeit-feier/1200/700',
+  galerie: ['paar1', 'paar2', 'paar3', 'paar4', 'paar5', 'paar6'].map(
+    (s) => `https://picsum.photos/seed/${s}/600/600`,
+  ),
+};

@@ -51,3 +51,6 @@ details { border-bottom: 1px solid var(--color-border); padding: var(--space-2) 
 summary { cursor: pointer; font-weight: 600; }
 table.wishes { width: 100%; border-collapse: collapse; }
 table.wishes th, table.wishes td { text-align: left; padding: var(--space-2); border-bottom: 1px solid var(--color-border); }
+.hero { width: 100%; height: auto; aspect-ratio: 12 / 7; object-fit: cover; border-radius: var(--radius); margin: var(--space-3) 0; }
+.galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-2); margin: var(--space-3) 0; }
+.galerie img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }

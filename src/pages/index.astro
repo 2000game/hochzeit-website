@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { paar, termin, trauung } from '../data/hochzeit';
+import { paar, termin, trauung, bilder } from '../data/hochzeit';
 ---
 <Base title="Start">
   <h1>{paar.name1} & {paar.name2}</h1>
+  <img class="hero" src={bilder.start} alt="Platzhalterbild" width="1200" height="700" />
   <p>Wir heiraten!</p>
   <p><strong>{termin.datumText}</strong><br />Trauung: {trauung.name}, {trauung.adresse}</p>
   <p class="countdown" id="countdown" data-target={termin.datumIso} hidden></p>

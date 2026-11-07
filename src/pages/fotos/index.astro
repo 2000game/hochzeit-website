@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { fotos } from '../../data/hochzeit';
+import { fotos, bilder } from '../../data/hochzeit';
 ---
 <Base title="Fotos">
   <h1>Fotos</h1>
@@ -10,5 +10,7 @@ import { fotos } from '../../data/hochzeit';
         {fotos.galerieUrl && <li><a href={fotos.galerieUrl}>Galerie des Fotografen</a></li>}
         {fotos.gaesteAlbumUrl && <li><a href={fotos.gaesteAlbumUrl}>Gäste-Album: lade Deine eigenen Fotos hoch</a></li>}
       </ul>}
+  <p>Ein kleiner Vorgeschmack (Platzhalter):</p>
+  <div class="galerie">{bilder.galerie.map((src) => <img src={src} alt="Platzhalterbild" loading="lazy" width="600" height="600" />)}</div>
   <p><small>Die Links sind nur für Gäste. Bitte teile sie nicht öffentlich.</small></p>
 </Base>
