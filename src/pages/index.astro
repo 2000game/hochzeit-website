@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { paar, termin, trauung, bilder } from '../data/hochzeit';
+import { paar, termin, trauung, bilder, texte } from '../data/hochzeit';
 import Kontakt from '../components/Kontakt.astro';
 ---
 <Base title="Start">
@@ -9,7 +9,7 @@ import Kontakt from '../components/Kontakt.astro';
   <p>Wir heiraten!</p>
   <p><strong>{termin.datumText}</strong><br />Trauung: {trauung.name}, {trauung.adresse}</p>
   <p class="countdown" id="countdown" data-target={termin.datumIso} hidden></p>
-  <p>Schön, dass Du dabei bist. Hier findest Du alles Wichtige rund um unseren Tag.</p>
+  <p>{texte.start}</p>
   <ul>
     <li><a href="/ablauf/">Ablauf von Trauung und Sektempfang</a></li>
     <li><a href="/feier/">Die Feier am Abend</a> (für alle, die dazu eingeladen sind)</li>

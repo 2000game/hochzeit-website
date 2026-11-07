@@ -1,11 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Timeline from '../../components/Timeline.astro';
-import { ablaufTrauung, trauung } from '../../data/hochzeit';
+import { ablaufTrauung, trauung, texte } from '../../data/hochzeit';
 ---
 <Base title="Ablauf">
   <h1>Ablauf</h1>
-  <p>Trauung und Sektempfang, für alle Gäste. <span class="todo">TODO: Text anpassen</span></p>
+  <p>{texte.ablauf}</p>
   <p>Ort: {trauung.name}, {trauung.adresse}</p>
   <Timeline items={ablaufTrauung} />
 </Base>

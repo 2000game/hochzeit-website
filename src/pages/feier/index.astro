@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Timeline from '../../components/Timeline.astro';
-import { ablaufFeier, feier, bilder } from '../../data/hochzeit';
+import { ablaufFeier, feier, bilder, texte } from '../../data/hochzeit';
 ---
 <Base title="Feier">
   <h1>Die Feier</h1>
   <img class="hero" src={bilder.feier} alt="Platzhalterbild" width="1200" height="700" />
-  <p>Du gehörst zum Kreis, der am Abend mit uns weiterfeiert. Wir freuen uns sehr! <span class="todo">TODO: Text</span></p>
+  <p>{texte.feier}</p>
   <h2>Ablauf</h2>
   <Timeline items={ablaufFeier} />
   <h2>Ort</h2>
