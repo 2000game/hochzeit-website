@@ -20,7 +20,7 @@ npm run build    # Ausgabe in dist/
 ## Zwei Einstiege (keine persönlichen Links)
 
 - `/` für alle Gäste (Trauung und Sektempfang).
-- `/feier/` nur für Feier-Gäste. Nicht in der öffentlichen Navigation. Die URL (oder ein QR-Code dazu) kommt nur auf die Einladungen zur Feier. Wer `/feier/` besucht, bekommt per `localStorage` die Feier-Punkte in der Navigation (Feier, Zusage Feier). Ohne `localStorage` funktioniert alles weiter, nur die Navigation bleibt kürzer.
+- `/feier/` und `/feier/zusage/`: Infos und Zusage für die Feier am Abend. Normal verlinkt (Start, Navigation, Zusage-Seite); wer zur Feier kommt, steht auf der Einladung.
 - Die ganze Seite ist `noindex` und per `robots.txt` gesperrt (privates Event).
 
 ## Backend
